@@ -7,7 +7,7 @@ from DNNs import MLP
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix, accuracy_score
+from sklearn.metrics import accuracy_score
 import seaborn as sns
 import matplotlib.pyplot as plt
 
@@ -102,30 +102,32 @@ for epoch in range(num_epochs):
     val_accuracy_l.append(val_accuracy)
     val_loss_l.append(avg_val_loss)
 
-torch.save(model.state_dict(), "mlp_state.pth")
+torch.save(model.state_dict(), "MLP_model/mlp_state.pth")
 
 plt.figure(figsize=(10, 4))
-plt.plot(train_loss, label='Train Loss')
-plt.plot(val_loss, label='Validation Loss')
+plt.plot(train_loss_l, label='Train Loss')
+plt.plot(val_loss_l, label='Validation Loss')
 plt.xlabel("Epoch")
 plt.ylabel("Loss")
 plt.title("Training Loss per Epoch")
 plt.legend()
 plt.grid(True)
-#plt.show()
+plt.savefig("MLP_train_plots/train_validation_loss.png")
+
 
 plt.figure(figsize=(10, 4))
-plt.plot(train_accuracy, label='Train Accuracy')
-plt.plot(val_accuracy, label='Validation Accuracy')
+plt.plot(train_accuracy_l, label='Train Accuracy')
+plt.plot(val_accuracy_l, label='Validation Accuracy')
 plt.xlabel("Epoch")
 plt.ylabel("Accuracy (%)")
 plt.title("Accuracy per Epoch")
 plt.legend()
 plt.grid(True)
-#plt.show()
+plt.savefig("MLP_train_plots/train_validation_accuracy.png")
+
 
 model = MLP(input_size=16, hidden_units=32, dropout=0.3, num_classes=3)
-model.load_state_dict(torch.load("mlp_state.pth"))
+model.load_state_dict(torch.load("MLP_model/mlp_state.pth"))
 model.to(device)
 model.eval()
 
@@ -142,13 +144,4 @@ with torch.no_grad():
         test_correct.extend(batch_y.numpy())
 
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
-print(f"Test Accuracy: {test_accuracy:.2f}%")
-
-confusion_matrix_ = confusion_matrix(test_correct, test_prediction)
-
-plt.figure(figsize=(6, 5))
-sns.heatmap(confusion_matrix_, annot=True, fmt='d', cmap='Blues', xticklabels=["Slice type 1", "Slice type 2", "Slice type 3"], yticklabels=["Slice type 1", "Slice type 2", "Slice type 3"])
-plt.xlabel("Predicted Label")
-plt.ylabel("True Label")
-plt.title("Confusion Matrix - Test Set")
-#plt.show()
+print(f"-> Test Accuracy: {test_accuracy:.2f}%")
