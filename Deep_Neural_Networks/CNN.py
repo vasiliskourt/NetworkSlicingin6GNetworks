@@ -8,7 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import pandas as pd
 
 # Load and preprocess the dataset
-df = pd.read_csv("../train_dataset.csv")
+df = pd.read_csv("../Dataset/train_dataset.csv")
 df['slice Type'] = df['slice Type'] - 1  # Convert labels {1,2,3} -> {0,1,2}
 
 X = df.drop(columns=['slice Type']).values

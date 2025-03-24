@@ -13,7 +13,7 @@ from sklearn.model_selection import KFold, train_test_split
 # K-Fold Cross Validation
 k_folds = 5
 kf = KFold(n_splits=k_folds, shuffle=True, random_state=42)
-dataset_df = pd.read_csv("../train_dataset.csv")
+dataset_df = pd.read_csv("../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy() - 1

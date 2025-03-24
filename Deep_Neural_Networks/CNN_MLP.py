@@ -59,7 +59,7 @@ def modelAccuracy(model):
 
     print(f'accuracy {accuracy}%')
 
-dataset_df = pd.read_csv("../train_dataset.csv")
+dataset_df = pd.read_csv("../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy()
