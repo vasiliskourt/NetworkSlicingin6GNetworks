@@ -1,18 +1,16 @@
 import torch
 import torch.nn as nn
 import pandas as pd
+from MLP_class import MLP
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.preprocessing import MinMaxScaler
-from DNNs import MLP
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
-import seaborn as sns
 import matplotlib.pyplot as plt
 
-
-dataset_df = pd.read_csv("../Dataset/train_dataset.csv")
+dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy()

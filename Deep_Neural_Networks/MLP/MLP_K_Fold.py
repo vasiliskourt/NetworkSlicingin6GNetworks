@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
+from MLP_class import MLP
 import numpy as np
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import StratifiedKFold
@@ -8,7 +9,6 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import pandas as pd
-from DNNs import MLP
 
 dataset_df = pd.read_csv("../Dataset/train_dataset.csv")
 
