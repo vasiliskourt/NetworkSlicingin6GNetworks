@@ -10,7 +10,7 @@ from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import pandas as pd
 
-dataset_df = pd.read_csv("../Dataset/train_dataset.csv")
+dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy()
