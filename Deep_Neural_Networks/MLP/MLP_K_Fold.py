@@ -127,8 +127,10 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.savefig(f"MLP_K_Fold_plots/validation_accuracy_fold_{fold_n}.png")
 
 
-print("\n================================")
-print(f"-> Average K-Fold Accuracy: {np.mean(fold_accuracies):.2f}%\n")
+
+print(f"\n-> Average K-Fold Accuracy: {np.mean(fold_accuracies):.2f}%\n")
+print("================================\n")
+
 
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), fold_accuracies, marker='o')

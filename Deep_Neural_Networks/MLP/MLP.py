@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
+
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
@@ -46,7 +47,6 @@ train_loss_l = []
 train_accuracy_l = []
 val_accuracy_l = []
 val_loss_l = []
-
 
 for epoch in range(num_epochs):
 
@@ -142,4 +142,6 @@ with torch.no_grad():
         test_correct.extend(batch_y.numpy())
 
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
-print(f"-> Test Accuracy: {test_accuracy:.2f}%")
+print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
+print("================================\n")
+

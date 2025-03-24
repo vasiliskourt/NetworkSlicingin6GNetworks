@@ -26,7 +26,7 @@ while True:
         executeScript("MLP_K_Fold.py", "Deep_Neural_Networks/MLP")
 
     elif select == "MLP Train":
-        executeScript("MLP_Train.py", "Deep_Neural_Networks/MLP")
+        executeScript("MLP.py", "Deep_Neural_Networks/MLP")
 
     elif select == "Exit":
         break
