@@ -145,3 +145,7 @@ test_accuracy = accuracy_score(test_correct, test_prediction) * 100
 print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
 print("================================\n")
 
+print("Plots saved:\n -> MLP/MLP_train_plots\n")
+print("Model saved:\n -> MLP/MLP_model\n")
+print("================================\n")
+

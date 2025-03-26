@@ -148,3 +148,7 @@ with torch.no_grad():
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
 print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
 print("================================\n")
+
+print("Plots saved:\n -> CNN/CNN_train_plots\n")
+print("Model saved:\n -> CNN/CNN_model\n")
+print("================================\n")

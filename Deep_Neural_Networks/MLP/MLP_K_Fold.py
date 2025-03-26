@@ -140,3 +140,7 @@ plt.ylabel("Validation Accuracy (%)")
 plt.xticks(range(1, k_folds_n + 1))
 plt.grid(True)
 plt.savefig(f"MLP_K_Fold_plots/k_folds_accuracy.png")
+
+print("Plots saved:\n -> MLP/MLP_K_Fold_plots\n")
+print("================================\n")
+
