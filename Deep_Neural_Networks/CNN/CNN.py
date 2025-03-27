@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
-
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
@@ -76,7 +75,6 @@ for epoch in range(num_epochs):
     avg_train_loss  = train_loss / len(train_loader)
     train_accuracy  = 100 * train_correct_prediction / train_total_checked      
    
-
     model.eval()
     val_correct_prediction = 0
     val_total_checked = 0
@@ -116,7 +114,6 @@ plt.legend()
 plt.grid(True)
 plt.savefig("CNN_train_plots/train_validation_loss.png")
 
-
 plt.figure(figsize=(10, 4))
 plt.plot(train_accuracy_l, label='Train Accuracy')
 plt.plot(val_accuracy_l, label='Validation Accuracy')
@@ -126,7 +123,6 @@ plt.title("Accuracy per Epoch")
 plt.legend()
 plt.grid(True)
 plt.savefig("CNN_train_plots/train_validation_accuracy.png")
-
 
 model = CNN1D(dropout=0.3)
 model.load_state_dict(torch.load("CNN_model/cnn_state.pth"))

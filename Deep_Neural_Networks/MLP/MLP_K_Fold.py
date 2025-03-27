@@ -104,7 +104,6 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
 
     print(f"\n-> Fold {fold_n} Average Validation Accuracy: {avg_accuracy:.2f}%")
 
-    # === Plot Loss για κάθε fold ===
     plt.figure(figsize=(10, 4))
     plt.plot(train_losses, label="Train Loss")
     plt.plot(val_losses, label="Validation Loss")
@@ -115,8 +114,6 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.grid(True)
     plt.savefig(f"MLP_K_Fold_plots/train_validation_loss_fold_{fold_n}.png")
 
-
-    # === Plot Accuracy για κάθε fold ===
     plt.figure(figsize=(10, 4))
     plt.plot(val_accuracies, label="Validation Accuracy", color="green")
     plt.title(f"Fold {fold_n} - Validation Accuracy")

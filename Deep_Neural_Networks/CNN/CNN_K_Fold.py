@@ -41,7 +41,6 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     X_val = features_tensor[val_index]
     y_val = label_tensor[val_index]
     
-    # Reshape for Conv1D
     X_train = X_train.reshape(-1, 1, 16)
     X_val = X_val.reshape(-1,1,16)
     train_fold_dataset = TensorDataset(X_train, y_train)
@@ -75,7 +74,6 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
             optimizer.step()
             train_loss += loss.item()
 
-
         avg_train_loss = train_loss / len(train_loader)
 
         model.eval()
@@ -107,7 +105,6 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
 
     print(f"\n-> Fold {fold_n} Average Validation Accuracy: {avg_accuracy:.2f}%")
 
-    # === Plot Loss για κάθε fold ===
     plt.figure(figsize=(10, 4))
     plt.plot(train_losses, label="Train Loss")
     plt.plot(val_losses, label="Validation Loss")
@@ -118,8 +115,6 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.grid(True)
     plt.savefig(f"CNN_K_Fold_plots/train_validation_loss_fold_{fold_n}.png")
 
-
-    # === Plot Accuracy για κάθε fold ===
     plt.figure(figsize=(10, 4))
     plt.plot(val_accuracies, label="Validation Accuracy", color="green")
     plt.title(f"Fold {fold_n} - Validation Accuracy")
@@ -129,11 +124,8 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.grid(True)
     plt.savefig(f"CNN_K_Fold_plots/validation_accuracy_fold_{fold_n}.png")
 
-
-
 print(f"\n-> Average K-Fold Accuracy: {np.mean(fold_accuracies):.2f}%\n")
 print("================================\n")
-
 
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), fold_accuracies, marker='o')

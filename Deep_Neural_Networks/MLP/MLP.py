@@ -10,7 +10,6 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 
-
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
@@ -72,7 +71,6 @@ for epoch in range(num_epochs):
     avg_train_loss  = train_loss / len(train_loader)
     train_accuracy  = 100 * train_correct_prediction / train_total_checked      
    
-
     model.eval()
     val_correct_prediction = 0
     val_total_checked = 0
@@ -91,10 +89,8 @@ for epoch in range(num_epochs):
     val_accuracy  = 100 * val_correct_prediction / val_total_checked
     avg_val_loss = val_loss / len(val_loader)
 
-
     print(f"Epoch [{epoch+1}/{num_epochs}] Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.5f} | Train Acc: {train_accuracy:.2f}% | Val Acc: {val_accuracy:.2f}%")
 
-    
     train_loss_l.append(avg_train_loss)
     train_accuracy_l.append(train_accuracy)
     val_accuracy_l.append(val_accuracy)
@@ -112,7 +108,6 @@ plt.legend()
 plt.grid(True)
 plt.savefig("MLP_train_plots/train_validation_loss.png")
 
-
 plt.figure(figsize=(10, 4))
 plt.plot(train_accuracy_l, label='Train Accuracy')
 plt.plot(val_accuracy_l, label='Validation Accuracy')
@@ -122,7 +117,6 @@ plt.title("Accuracy per Epoch")
 plt.legend()
 plt.grid(True)
 plt.savefig("MLP_train_plots/train_validation_accuracy.png")
-
 
 model = MLP(input_size=16, hidden_units=32, dropout=0.3, num_classes=3)
 model.load_state_dict(torch.load("MLP_model/mlp_state.pth"))
@@ -142,6 +136,7 @@ with torch.no_grad():
         test_correct.extend(batch_y.numpy())
 
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
+
 print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
 print("================================\n")
 

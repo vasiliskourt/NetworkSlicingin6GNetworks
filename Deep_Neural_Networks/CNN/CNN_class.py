@@ -1,7 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
 
-
 class CNN1D(nn.Module):
     def __init__(self, dropout , num_classes=3,):
         super(CNN1D, self).__init__()
