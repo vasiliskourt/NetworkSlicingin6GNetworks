@@ -22,6 +22,14 @@ RandForestClass = RandomForestClassifier()
 
 RandForestClass.fit(X_train, y_train)
 
+# Create the SHAP Explainer
+explainer = shap.Explainer(RandForestClass)
+treeExplainer = shap.TreeExplainer(RandForestClass)
+shap_values = explainer.shap_values(features)
+
+# Plot SHAP values for each class
+#shap.summary_plot(shap_values, features, plot_type="bar", class_names=['Value:1', 'Value:2', 'Value:3'])
+shap.summary_plot(shap_values, features)
 prediction = RandForestClass.predict(X_test)
 
 accuracy = accuracy_score(y_test, prediction) * 100
@@ -36,15 +44,8 @@ print('Recall:', recall_score(y_test,
 with open('RandomForestClassifierModel.pkl','wb') as f:
     pickle.dump(RandForestClass,f)
     print(f"Model saved as:'RandomForestClassifierModel.pkl'")
-# Create SHAP explainer (pass training data for background dataset)
-explainer = shap.Explainer(RandForestClass, X_train)
 
-# Calculate SHAP values for the test set
-shap_values = explainer(X_test)
 
-# Generate a summary plot for all features (this will cover all 16 features)
-for i in range(len(shap_values)-1):
-    shap.plots.beeswarm(shap_values[:,:,i])
 feature_importances = RandForestClass.feature_importances_
 '''
 plt.barh(features.columns, feature_importances)
