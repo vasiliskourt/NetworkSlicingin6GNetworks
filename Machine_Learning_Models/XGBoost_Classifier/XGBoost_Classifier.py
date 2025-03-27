@@ -53,9 +53,13 @@ plt.savefig("XGBoost_train_plots/train_validation_accuracy.png")
 predictions = np.argmax(model.predict(test_dmatrix), axis=1)
 test_accuracy = accuracy_score(y_test, predictions) * 100
 
+print("\n================================\n")
+print(classification_report(y_test, predictions, digits=2))
+print("================================\n")
+
 model.save_model("XGBoost_model/xgboost_model.json")
 
-print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
+print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
 print("================================\n")
 
 print("Plots saved:\n -> XGBoost_Classifier/XGBoost_train_plots\n")
