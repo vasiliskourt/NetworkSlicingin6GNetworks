@@ -44,11 +44,11 @@ plt.figure(figsize=(10, 4))
 plt.plot(evals_res['train']['mlogloss'], label="Train Loss")
 plt.plot(evals_res['validation']['mlogloss'], label="Validation Loss")
 plt.xlabel("Iteration")
-plt.ylabel("Log Loss")
+plt.ylabel("Loss")
 plt.title("Training & Validation Loss")
 plt.legend()
 plt.grid(True)
-plt.savefig("XGBoost_train_plots/train_validation_accuracy.png")
+plt.savefig("XGBoost_train_plots/train_validation_loss.png")
 
 predictions = np.argmax(model.predict(test_dmatrix), axis=1)
 test_accuracy = accuracy_score(y_test, predictions) * 100
@@ -61,7 +61,6 @@ model.save_model("XGBoost_model/xgboost_model.json")
 
 print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
 print("================================\n")
-
 print("Plots saved:\n -> XGBoost_Classifier/XGBoost_train_plots\n")
 print("Model saved:\n -> XGBoost_Classifier/XGBoost_model\n")
 print("================================\n")

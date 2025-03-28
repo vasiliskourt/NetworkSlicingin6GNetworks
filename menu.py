@@ -16,6 +16,7 @@ while True:
     select = questionary.select(
         "Select a choice",
         choices=[
+            "Dataset Description",
             "MLP K-Fold Cross-Validation",
             "CNN K-Fold Cross-Validation",
             "Random Forest K-Fold Cross-Validation",
@@ -30,7 +31,10 @@ while True:
         ]
     ).ask()
 
-    if select == "MLP K-Fold Cross-Validation":
+    if select == "Dataset Description":
+        executeScript("dataset_description.py", "Dataset")
+
+    elif select == "MLP K-Fold Cross-Validation":
         executeScript("MLP_K_Fold.py", "Deep_Neural_Networks/MLP")
 
     elif select == "CNN K-Fold Cross-Validation":
