@@ -38,15 +38,46 @@ for train_index, val_index in k_folds.split(features, label):
         'seed': 42
     }
 
+    evals_res = {}
+
     model = xgb.train(parameters, train_dmatrix,
                       num_boost_round=100,
+                      evals=[(train_dmatrix,'train'),(val_dmatrix,'validation')],
+                      early_stopping_rounds=10,
+                      evals_result= evals_res,
                       verbose_eval=False)
     
     predictions = np.argmax(model.predict(val_dmatrix), axis=1)
     accuracy = accuracy_score(y_val, predictions)
 
-    fold_accuracies.append(accuracy)
+    fold_accuracies.append(accuracy*100)
 
-    print(f"-> Fold {fold_n} Average Validation Accuracy: {accuracy * 100:.2f}%\n")
+    plt.figure(figsize=(10, 4))
+    plt.plot(evals_res['train']['mlogloss'], label="Train Loss")
+    plt.plot(evals_res['validation']['mlogloss'], label="Validation Loss")
+    plt.title(f"Fold {fold_n} Loss")
+    plt.ylabel("Log Loss")
+    plt.xlabel("Iteration")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f"XGBoost_K_Fold_plots/train_validation_loss_fold_{fold_n}.png")
+
+    print(f"-> Fold {fold_n} Validation Accuracy: {accuracy*100:.2f}%\n")
 
 avg_accuracy = np.mean(fold_accuracies)
+
+plt.figure(figsize=(8, 5))
+plt.plot(range(1, k_folds_n + 1), fold_accuracies, marker='o')
+plt.title("Validation Accuracy per Fold")
+plt.xlabel("Fold")
+plt.ylabel("Validation Accuracy (%)")
+plt.xticks(range(1, k_folds_n + 1))
+plt.grid(True)
+plt.savefig(f"XGBoost_K_Fold_plots/k_folds_accuracy.png")
+
+print("================================\n")
+print(f"-> Average Validation Accuracy: {avg_accuracy:.2f}%\n")
+print("================================\n")
+print("Plots saved:\n -> XGBoost_Classifier/XGBoost_K_Fold_plots\n")
+print("================================\n")
+
