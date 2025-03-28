@@ -5,7 +5,6 @@ from sklearn.metrics import classification_report, precision_score,recall_score,
 from sklearn.model_selection import  train_test_split
 import pickle
 from sklearn.metrics import confusion_matrix
-import shap
 import seaborn as sns
 import matplotlib.pyplot as plt
 from dataset import X_train,X_test,y_train,y_test
@@ -33,6 +32,9 @@ with open('RandomForestClassifierModel.pkl','wb') as f:
     pickle.dump(RandForestClass,f)
     print(f"Model saved as:'RandomForestClassifierModel.pkl'")
 
+print("\n================================\n")
+print(classification_report(y_test, prediction, digits=2))
+print("================================\n")
 
 #feature_importances = RandForestClass.feature_importances_
 '''
