@@ -24,6 +24,8 @@ while True:
             "CNN Train",
             "Random Forest Train",
             "XGBoost Train",
+            "Random Forest Classifier SHAP",
+            "Random Forest Classifier Lime",
             "Exit"
         ]
     ).ask()
@@ -51,6 +53,12 @@ while True:
 
     elif select == "XGBoost Train":
         executeScript("XGBoost_Classifier.py","Machine_Learning_Models/XGBoost_Classifier")
+
+    elif select == "Random Forest Classifier SHAP":
+        executeScript("rfc_SHAP.py","Machine_Learning_Models/Random_Forest_Classifier")
+
+    elif select == "Random Forest Classifier Lime":
+        executeScript("rfc_lime.py","Machine_Learning_Models/Random_Forest_Classifier")
 
     elif select == "Exit":
         break

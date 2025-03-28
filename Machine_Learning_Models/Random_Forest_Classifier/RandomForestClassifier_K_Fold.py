@@ -8,13 +8,7 @@ import pickle
 from sklearn.metrics import confusion_matrix
 import seaborn as sns
 import matplotlib.pyplot as plt
-dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
-
-features = dataset_df.drop(columns=['slice Type'])
-label = dataset_df['slice Type'] - 1
-
-scaler = MinMaxScaler(feature_range=(0,1))
-features = scaler.fit_transform(features)
+from dataset import features,label
 
 k_folds_n = 5
 
