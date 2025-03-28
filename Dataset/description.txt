@@ -1,0 +1,17 @@
+* LTE/5g Category - User Equipment categories or classes to define the performance specifications.
+* Time - Time of the day (24h).
+* Packet Loss Rate - Νumber of packets not received divided by the total number of packets sent.
+* Packet Delay - The time for a packet to be received.
+* IoT - Usage in IoT  (0 or 1)
+* LTE/5G - LTE (4G) or 5G (0 or 1)
+* GBR - Guaranteed Bit Rate (0 or 1)
+* Non-GBR - Do not have Guaranteed Bit Rate (0 or 1)
+* AR/VR/Gaming - Usage in AR/VR/Gaming (0 or 1)
+* Healthcare - Usage in Healthcare (0 or 1)
+* Industry 4.0 - Usage in Digital Enterprises (0 or 1)
+* IoT Devices - Is it ΙοΤ Device (0 or 1)
+* Public Safety - Usage for public welfare and safety purposes (0 or 1)
+* Smart City & Home - Usage in daily household chores (0 or 1)
+* Smart Transportation - Usage in public transportation (0 or 1)
+* Smartphone - Whether used for smartphone cellular data (0 or 1)
+* Slice Type - Which network configuration that allows multiple networks (virtualized and independent)
