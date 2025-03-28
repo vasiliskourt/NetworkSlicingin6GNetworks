@@ -1,43 +1,43 @@
 ---------MLP Report---------
 -> Epochs: 40
 
-->Validation Accuracy:
-Fold 1: 99.35%
-Fold 2: 99.96%
-Fold 3: 99.28%
-Fold 4: 99.86%
-Fold 5: 99.52%
+-> Validation Accuracy:
+Fold 1: 99.56%
+Fold 2: 99.81%
+Fold 3: 99.56%
+Fold 4: 99.56%
+Fold 5: 99.30%
 
--> Average Validation Accuracy: 99.60%
+-> Average Validation Accuracy: 99.56%
 
-->Train Accuracy:
-Fold 1: 99.35%
-Fold 2: 99.96%
-Fold 3: 99.28%
-Fold 4: 99.86%
-Fold 5: 99.52%
+-> Train Accuracy:
+Fold 1: 98.57%
+Fold 2: 99.14%
+Fold 3: 98.72%
+Fold 4: 98.29%
+Fold 5: 98.72%
 
--> Average Train Accuracy: 99.60%
+-> Average Train Accuracy: 98.69%
 
 -> Train Time:
-Fold 1: 7.707 seconds
-Fold 2: 7.819 seconds
-Fold 3: 7.811 seconds
-Fold 4: 7.996 seconds
-Fold 5: 7.924 seconds
+Fold 1: 7.457 seconds
+Fold 2: 7.700 seconds
+Fold 3: 7.660 seconds
+Fold 4: 7.590 seconds
+Fold 5: 7.674 seconds
 
--> Average Train Time: 7.851 seconds
+-> Average Train Time: 7.616 seconds
 
 -> Train Loss: (Avg per fold)
-Fold 1: 0.060
+Fold 1: 0.064
 Fold 2: 0.056
-Fold 3: 0.069
-Fold 4: 0.056
-Fold 5: 0.066
+Fold 3: 0.060
+Fold 4: 0.064
+Fold 5: 0.057
 
 -> Validation Loss (Avg per fold):
-Fold 1: 0.041
+Fold 1: 0.042
 Fold 2: 0.036
-Fold 3: 0.047
-Fold 4: 0.037
-Fold 5: 0.044
+Fold 3: 0.040
+Fold 4: 0.043
+Fold 5: 0.038

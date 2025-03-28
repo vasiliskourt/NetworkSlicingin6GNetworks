@@ -122,7 +122,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     val_avg_accuracy = np.mean(val_accuracies)
     train_avg_accuracy = np.mean(train_accuracies)
     val_fold_accuracies.append(np.mean(val_avg_accuracy))
-    train_fold_accuracies.append(np.mean(val_avg_accuracy))
+    train_fold_accuracies.append(np.mean(train_avg_accuracy))
     train_loss_l.append(np.mean(train_losses))
     val_loss_l.append(np.mean(val_losses))
 
@@ -152,7 +152,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
 print("================================\n")
 print(f"-> Average K-Fold Train Accuracy: {np.mean(train_fold_accuracies):.2f}%\n")
 print(f"-> Average K-Fold Validation Accuracy: {np.mean(val_fold_accuracies):.2f}%\n")
-print(f"-> Average CNN Training Time: {np.mean(train_time_l):.2f} seconds\n")
+print(f"-> Average MLP Training Time: {np.mean(train_time_l):.2f} seconds\n")
 print("================================\n")
 
 plt.figure(figsize=(8, 5))
@@ -167,7 +167,7 @@ plt.grid(True)
 plt.savefig(f"MLP_K_Fold_plots/k_folds_accuracy.png")
 
 plt.figure(figsize=(10, 4))
-plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time", marker='o')
+plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time")
 plt.title("(MLP) Time to train")
 plt.xlabel("Epoch")
 plt.ylabel("Training Time")

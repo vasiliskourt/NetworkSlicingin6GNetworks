@@ -1,34 +1,43 @@
 ---------CNN Report---------
 -> Epochs: 40
 
--> Accuracy:
-Fold 1: 99.84%
-Fold 2: 99.14%
-Fold 3: 99.84%
-Fold 4: 100.00%
-Fold 5: 99.22%
+-> Validation Accuracy:
+Fold 1: 99.60%
+Fold 2: 99.85%
+Fold 3: 99.87%
+Fold 4: 99.58%
+Fold 5: 99.86%
 
--> Average Accuracy: 99.61%
+-> Average Validation Accuracy: 99.75%
+
+-> Train Accuracy:
+Fold 1: 98.55%
+Fold 2: 98.90%
+Fold 3: 98.96%
+Fold 4: 98.64%
+Fold 5: 98.82%
+
+-> Average Train Accuracy: 98.77%
 
 -> Train Time:
-Fold 1: 8.492 seconds
-Fold 2: 9.142 seconds
-Fold 3: 9.043 seconds
-Fold 4: 9.043 seconds
-Fold 5: 9.065 seconds
+Fold 1: 8.728 seconds
+Fold 2: 9.252 seconds
+Fold 3: 9.331 seconds
+Fold 4: 9.359 seconds
+Fold 5: 9.262 seconds
 
--> Average Train Time: 8.957 seconds
+-> Average Train Time: 9.187 seconds
 
 -> Train Loss: (Avg per fold)
-Fold 1: 0.037
-Fold 2: 0.044
+Fold 1: 0.045
+Fold 2: 0.035
 Fold 3: 0.037
-Fold 4: 0.034
-Fold 5: 0.049
+Fold 4: 0.045
+Fold 5: 0.038
 
 -> Validation Loss (Avg per fold):
-Fold 1: 0.020
-Fold 2: 0.025
-Fold 3: 0.021
-Fold 4: 0.017
-Fold 5: 0.028
+Fold 1: 0.027
+Fold 2: 0.017
+Fold 3: 0.019
+Fold 4: 0.026
+Fold 5: 0.021
