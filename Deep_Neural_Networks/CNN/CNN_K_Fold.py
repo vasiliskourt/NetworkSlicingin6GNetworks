@@ -9,6 +9,8 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.metrics import accuracy_score
 import matplotlib.pyplot as plt
 import pandas as pd
+import time
+
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
@@ -29,6 +31,7 @@ batch_size=512
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 fold_accuracies = []
+train_time_l = []
 fold_n = 0
 
 for train_index, val_index in k_folds.split(features_tensor,label_tensor):
@@ -58,6 +61,8 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     train_losses = []
     val_losses = []
     val_accuracies = []
+
+    train_time_start = time.time()
 
     for epoch in range(num_epochs):
         
@@ -100,10 +105,14 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
         val_losses.append(avg_val_loss)
         val_accuracies.append(val_accuracy)
 
+    train_time_end = time.time()
+    training_time = train_time_end - train_time_start
+    train_time_l.append(training_time)
     avg_accuracy = np.mean(val_accuracies)
     fold_accuracies.append(np.mean(avg_accuracy))
 
-    print(f"\n-> Fold {fold_n} Average Validation Accuracy: {avg_accuracy:.2f}%")
+    print(f"\n-> Fold {fold_n} Average Validation Accuracy: {avg_accuracy:.2f}%, Training Time: {training_time:.3f} seconds")
+
 
     plt.figure(figsize=(10, 4))
     plt.plot(train_losses, label="Train Loss")
@@ -111,30 +120,44 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.title(f"Fold {fold_n} - Train & Validation Loss")
     plt.xlabel("Epoch")
     plt.ylabel("Loss")
+    plt.xticks(range(1, num_epochs + 1))
     plt.legend()
     plt.grid(True)
     plt.savefig(f"CNN_K_Fold_plots/train_validation_loss_fold_{fold_n}.png")
 
     plt.figure(figsize=(10, 4))
-    plt.plot(val_accuracies, label="Validation Accuracy", color="green")
+    plt.plot(val_accuracies, label="Validation Accuracy")
     plt.title(f"Fold {fold_n} - Validation Accuracy")
     plt.xlabel("Epoch")
     plt.ylabel("Accuracy (%)")
+    plt.xticks(range(1, num_epochs + 1))
     plt.legend()
     plt.grid(True)
     plt.savefig(f"CNN_K_Fold_plots/validation_accuracy_fold_{fold_n}.png")
 
-print(f"\n-> Average K-Fold Accuracy: {np.mean(fold_accuracies):.2f}%\n")
+print("================================\n")
+print(f"-> Average K-Fold Accuracy: {np.mean(fold_accuracies):.2f}%\n")
+print(f"-> Average CNN Training Time: {np.mean(train_time_l):.2f} seconds\n")
 print("================================\n")
 
 plt.figure(figsize=(8, 5))
-plt.plot(range(1, k_folds_n + 1), fold_accuracies, marker='o')
+plt.plot(range(1, k_folds_n + 1), fold_accuracies, label="Accuracy", marker='o')
 plt.title("Validation Accuracy per Fold")
 plt.xlabel("Fold")
 plt.ylabel("Validation Accuracy (%)")
 plt.xticks(range(1, k_folds_n + 1))
+plt.legend()
 plt.grid(True)
 plt.savefig(f"CNN_K_Fold_plots/k_folds_accuracy.png")
+
+plt.figure(figsize=(10, 4))
+plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time", marker='o')
+plt.title("Time to train")
+plt.xlabel("Epoch")
+plt.ylabel("Training Time")
+plt.legend()
+plt.grid(True)
+plt.savefig(f"CNN_K_Fold_plots/training_time.png")
 
 print("Plots saved:\n -> CNN/CNN_K_Fold_plots\n")
 print("================================\n")
