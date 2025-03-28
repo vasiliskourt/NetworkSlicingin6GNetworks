@@ -1,7 +1,7 @@
 import pickle
 import shap
 import matplotlib.pyplot as plt
-from dataset import features, X_test
+from Machine_Learning_Models.dataset import features, X_test
 
 with open('RandomForestClassifierModel.pkl', 'rb') as f:
     RandForestClass = pickle.load(f)

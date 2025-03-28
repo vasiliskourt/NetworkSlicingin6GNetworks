@@ -35,7 +35,7 @@ for train_index, val_index in k_folds.split(features,label):
     cm = confusion_matrix(y_val, y_pred)
     # Plot the confusion matrix
     plt.figure(figsize=(6, 6))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Class 0', 'Class 1'], yticklabels=['Class 0', 'Class 1'])
+    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Class 0', 'Class 1','Class 2'], yticklabels=['Class 0', 'Class 1','Class 2'])
     plt.title(f'Confusion Matrix for Fold {fold_n}')
     plt.xlabel('Predicted')
     plt.ylabel('True')
