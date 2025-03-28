@@ -47,13 +47,13 @@ while True:
         executeScript("CNN.py", "Deep_Neural_Networks/CNN")
 
     elif select == "Random Forest K-Fold Cross-Validation":
-        executeScript("RandomForestClassifier_K_Fold.py","Machine_Learning_Models/Random_Forest_Classifier")
+        executeScript("Random_Forest_Classifier_K_Fold.py","Machine_Learning_Models/Random_Forest_Classifier")
 
     elif select == "XGBoost K-Fold Cross-Validation":
         executeScript("XGBoost_Classifier_K_Fold.py","Machine_Learning_Models/XGBoost_Classifier")
     
     elif select == "Random Forest Train":
-        executeScript("RandomForestClassifier.py","Machine_Learning_Models/Random_Forest_Classifier")
+        executeScript("Random_Forest_Classifier.py","Machine_Learning_Models/Random_Forest_Classifier")
 
     elif select == "XGBoost Train":
         executeScript("XGBoost_Classifier.py","Machine_Learning_Models/XGBoost_Classifier")

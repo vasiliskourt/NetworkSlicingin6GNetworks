@@ -126,7 +126,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     train_loss_l.append(np.mean(train_losses))
     val_loss_l.append(np.mean(val_losses))
 
-    print(f"\n-> Fold {fold_n} Average Validation Accuracy: {val_avg_accuracy:.2f}%, Average Train Accuracy: {train_avg_accuracy:.2f}% , Training Time: {training_time:.3f} seconds")
+    print(f"\n-> Fold {fold_n} Average Validation Accuracy: {val_avg_accuracy:.2f}%, Average Train Accuracy: {train_avg_accuracy:.2f}%, Training Time: {training_time:.3f} seconds")
 
     plt.figure(figsize=(10, 4))
     plt.plot(train_losses, label="Train Loss")
@@ -169,8 +169,8 @@ plt.savefig(f"MLP_K_Fold_plots/k_folds_accuracy.png")
 plt.figure(figsize=(10, 4))
 plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time")
 plt.title("(MLP) Time to train")
-plt.xlabel("Epoch")
-plt.ylabel("Training Time")
+plt.xlabel("Fold")
+plt.ylabel("Training Time (seconds)")
 plt.legend()
 plt.grid(True)
 plt.savefig(f"MLP_K_Fold_plots/training_time.png")
@@ -181,21 +181,24 @@ with open("MLP_report/mlp_report.txt", "w") as file:
     file.write("\n-> Validation Accuracy:\n")
     for i, acc in enumerate(val_fold_accuracies):
         file.write(f"Fold {i+1}: {acc:.2f}%\n")
-    file.write(f"\n-> Average Validation Accuracy: {np.mean(val_fold_accuracies):.2f}%\n")
+    file.write(f"\nAverage Validation Accuracy: {np.mean(val_fold_accuracies):.2f}%\n")
     file.write("\n-> Train Accuracy:\n")
     for i, acc in enumerate(train_fold_accuracies):
         file.write(f"Fold {i+1}: {acc:.2f}%\n")
-    file.write(f"\n-> Average Train Accuracy: {np.mean(train_fold_accuracies):.2f}%\n")
+    file.write(f"\nAverage Train Accuracy: {np.mean(train_fold_accuracies):.2f}%\n")
     file.write(f"\n-> Train Time:\n")
     for i, times in enumerate(train_time_l):
         file.write(f"Fold {i+1}: {times:.3f} seconds\n")
-    file.write(f"\n-> Average Train Time: {np.mean(train_time_l):.3f} seconds\n")
+    file.write(f"\nAverage Train Time: {np.mean(train_time_l):.3f} seconds\n")
     file.write("\n-> Train Loss: (Avg per fold)\n")
     for i, loss in enumerate(train_loss_l):
-        file.write(f"Fold {i+1}: {loss:.3f}\n")
+        file.write(f"Fold {i+1}: {loss:.6f}\n")
+    file.write(f"\nAverage Train Loss: {np.mean(train_loss_l):.6f}\n")
     file.write("\n-> Validation Loss (Avg per fold):\n")
     for i, loss in enumerate(val_loss_l):
-        file.write(f"Fold {i+1}: {loss:.3f}\n")
+        file.write(f"Fold {i+1}: {loss:.6f}\n")
+    file.write(f"\nAverage Validation Loss: {np.mean(val_loss_l):.6f}\n")
+
 
 print("Report saved:\n -> MLP/MLP_report\n")
 print("Plots saved:\n -> MLP/MLP_K_Fold_plots\n")

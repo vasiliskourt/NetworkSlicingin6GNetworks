@@ -1,0 +1,28 @@
+---------Random Forest Report---------
+
+-> Validation Accuracy:
+Fold 1: 100.00%
+Fold 2: 100.00%
+Fold 3: 100.00%
+Fold 4: 100.00%
+Fold 5: 100.00%
+
+Average Validation Accuracy: 100.00%
+
+-> Train Accuracy:
+Fold 1: 100.00%
+Fold 2: 100.00%
+Fold 3: 100.00%
+Fold 4: 100.00%
+Fold 5: 100.00%
+
+Average Train Validation Accuracy: 100.00%
+
+-> Train Time:
+Fold 1: 0.245 seconds
+Fold 2: 0.242 seconds
+Fold 3: 0.251 seconds
+Fold 4: 0.394 seconds
+Fold 5: 0.241 seconds
+
+Average Train Time: 0.275 seconds

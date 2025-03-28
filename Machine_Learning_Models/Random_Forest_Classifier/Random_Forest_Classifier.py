@@ -20,18 +20,19 @@ X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, s
 randomForestModel = RandomForestClassifier(n_estimators=100, random_state=42)
 randomForestModel.fit(X_train,y_train)
 
-predictions = randomForestModel.predict(X_test)
-accuracy = accuracy_score(y_test, predictions) * 100
+test_predictions = randomForestModel.predict(X_test)
+
+test_accuracy = accuracy_score(y_test, test_predictions) * 100
 
 joblib.dump(randomForestModel, "RandomForestClassifier_model/random_forest_model.pkl")
 joblib.dump(scaler, "RandomForestClassifier_model/scaler.pkl")
 
 print("\n================================\n")
-print(classification_report(y_test, predictions, digits=2))
+print(classification_report(y_test, test_predictions, digits=2))
 print("================================\n")
-print(f"-> Test Accuracy: {accuracy:.2f}%\n")
+print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
 
-cm = ConfusionMatrixDisplay.from_predictions(y_test, predictions, cmap="Blues")
+cm = ConfusionMatrixDisplay.from_predictions(y_test, test_predictions, cmap="Blues")
 plt.title("Random Forest - Confusion Matrix")
 plt.grid(False)
 plt.savefig("RandomForestClassifier_CM/CM.png")
