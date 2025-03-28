@@ -5,6 +5,7 @@ from sklearn.model_selection import  train_test_split
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
+import joblib
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
@@ -58,9 +59,11 @@ print(classification_report(y_test, predictions, digits=2))
 print("================================\n")
 
 model.save_model("XGBoost_model/xgboost_model.json")
+joblib.dump(scaler, "XGBoost_model/scaler.pkl")
 
 print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
 print("================================\n")
 print("Plots saved:\n -> XGBoost_Classifier/XGBoost_train_plots\n")
+print("Scaler saved:\n -> XGBoost_Classifier/XGBoost_model\n")
 print("Model saved:\n -> XGBoost_Classifier/XGBoost_model\n")
 print("================================\n")

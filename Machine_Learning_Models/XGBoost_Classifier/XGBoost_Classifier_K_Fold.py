@@ -14,9 +14,9 @@ scaler = MinMaxScaler(feature_range=(0,1))
 features = scaler.fit_transform(features)
 
 k_folds_n = 5
+fold_n = 0
 
 k_folds = StratifiedKFold(n_splits=k_folds_n, shuffle=True, random_state=42)
-fold_n = 0
 
 fold_accuracies = []
 
