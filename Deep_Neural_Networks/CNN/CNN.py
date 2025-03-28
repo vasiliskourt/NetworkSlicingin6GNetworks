@@ -7,8 +7,8 @@ from sklearn.preprocessing import MinMaxScaler
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score
-import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, classification_report
+import joblib
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
@@ -39,12 +39,12 @@ val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model = CNN1D(dropout=0.3).to(device)
+model = CNN1D(input_size=16, hidden_units=32, dropout=0.3, num_classes=3).to(device)
 
 optimizer = optim.Adam(model.parameters(), lr=0.001,weight_decay=0.0001)
 criterion = nn.CrossEntropyLoss()
 
-num_epochs = 50
+num_epochs = 40
 
 train_loss_l = []
 train_accuracy_l = []
@@ -124,8 +124,9 @@ plt.legend()
 plt.grid(True)
 plt.savefig("CNN_train_plots/train_validation_accuracy.png")
 
-model = CNN1D(dropout=0.3)
+model = CNN1D(input_size=16, hidden_units=32, dropout=0.3, num_classes=3).to(device)
 model.load_state_dict(torch.load("CNN_model/cnn_state.pth"))
+joblib.dump(scaler, "CNN_model/scaler.pkl")
 model.to(device)
 model.eval()
 
@@ -142,9 +143,13 @@ with torch.no_grad():
         test_correct.extend(batch_y.numpy())
 
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
-print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
-print("================================\n")
 
+print("\n================================\n")
+print(classification_report(y_test, test_prediction, digits=2))
+print("================================\n")
+print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
+print("================================\n")
 print("Plots saved:\n -> CNN/CNN_train_plots\n")
+print("Scaler saved:\n -> CNN/CNN_model\n")
 print("Model saved:\n -> CNN/CNN_model\n")
 print("================================\n")

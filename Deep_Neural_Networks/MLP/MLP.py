@@ -7,8 +7,9 @@ from sklearn.preprocessing import MinMaxScaler
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score
-import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, classification_report
+import joblib
+
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
@@ -89,7 +90,7 @@ for epoch in range(num_epochs):
     val_accuracy  = 100 * val_correct_prediction / val_total_checked
     avg_val_loss = val_loss / len(val_loader)
 
-    print(f"Epoch [{epoch+1}/{num_epochs}] Train Loss: {avg_train_loss:.4f} | Val Loss: {avg_val_loss:.5f} | Train Acc: {train_accuracy:.2f}% | Val Acc: {val_accuracy:.2f}%")
+    print(f"Epoch [{epoch+1}/{num_epochs}] Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f} | Train Acc: {train_accuracy:.2f}% | Val Acc: {val_accuracy:.2f}%")
 
     train_loss_l.append(avg_train_loss)
     train_accuracy_l.append(train_accuracy)
@@ -120,6 +121,8 @@ plt.savefig("MLP_train_plots/train_validation_accuracy.png")
 
 model = MLP(input_size=16, hidden_units=32, dropout=0.3, num_classes=3)
 model.load_state_dict(torch.load("MLP_model/mlp_state.pth"))
+joblib.dump(scaler, "MLP_model/scaler.pkl")
+
 model.to(device)
 model.eval()
 
@@ -137,10 +140,13 @@ with torch.no_grad():
 
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
 
-print(f"\n-> Test Accuracy: {test_accuracy:.2f}%")
+print("\n================================\n")
+print(classification_report(y_test, test_prediction, digits=2))
 print("================================\n")
-
+print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
+print("================================\n")
 print("Plots saved:\n -> MLP/MLP_train_plots\n")
+print("Scaler saved:\n -> MLP/MLP_model\n")
 print("Model saved:\n -> MLP/MLP_model\n")
 print("================================\n")
 
