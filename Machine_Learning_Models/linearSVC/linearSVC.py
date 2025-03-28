@@ -28,9 +28,9 @@ print('Recall:', recall_score(y_test,
 print(classification_report(prediction, y_test))
 
 
-with open('RandomForestClassifierModel.pkl','wb') as f:
+with open('linearSVCModel.pkl','wb') as f:
     pickle.dump(RandForestClass,f)
-    print(f"Model saved as:'RandomForestClassifierModel.pkl'")
+    print(f"Model saved as:'linearSVCModel.pkl'")
 
 print("\n================================\n")
 print(classification_report(y_test, prediction, digits=2))

@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import matplotlib.pyplot as plt
-from Machine_Learning_Models.dataset import features,X_train,X_test
+from dataset import features,X_train,X_test
 
 with open('RandomForestClassifierModel.pkl', 'rb') as f:
     RandForestClass = pickle.load(f)
