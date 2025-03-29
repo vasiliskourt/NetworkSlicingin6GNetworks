@@ -8,8 +8,8 @@ import pandas as pd
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 
-features = dataset_df.drop(columns=['slice Type']).values
-label = (dataset_df['slice Type'] - 1).values
+features = dataset_df.drop(columns=['slice Type'])
+label = (dataset_df['slice Type'] - 1)
 
 scaler = MinMaxScaler(feature_range=(0,1))
 features = scaler.fit_transform(features)

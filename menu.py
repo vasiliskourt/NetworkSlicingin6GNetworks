@@ -28,7 +28,6 @@ while True:
             "XGBoost Train",
             "LinearSVC Train",
             "Random Forest Classifier SHAP",
-            "Random Forest Classifier Lime",
             "Exit"
         ]
     ).ask()
@@ -61,10 +60,7 @@ while True:
         executeScript("XGBoost_Classifier.py","Machine_Learning_Models/XGBoost_Classifier")
 
     elif select == "Random Forest Classifier SHAP":
-        executeScript("rfc_SHAP.py","Machine_Learning_Models/Random_Forest_Classifier")
-
-    elif select == "Random Forest Classifier Lime":
-        executeScript("rfc_lime.py","Machine_Learning_Models/Random_Forest_Classifier")
+        executeScript("Random_Forest_SHAP.py","Machine_Learning_Models/Random_Forest_Classifier")
 
     elif select == "LinearSVC Train":
         executeScript("linearSVC.py","Machine_Learning_Models/LinearSVC")
