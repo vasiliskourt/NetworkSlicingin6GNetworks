@@ -2,46 +2,46 @@
 -> Epochs: 40
 
 -> Validation Accuracy:
-Fold 1: 99.89%
-Fold 2: 99.74%
-Fold 3: 99.86%
-Fold 4: 99.68%
-Fold 5: 99.41%
+Fold 1: 99.67%
+Fold 2: 99.93%
+Fold 3: 98.79%
+Fold 4: 99.67%
+Fold 5: 98.96%
 
-Average Validation Accuracy: 99.72%
+Average Validation Accuracy: 99.40%
 
 -> Train Accuracy:
-Fold 1: 99.00%
-Fold 2: 98.86%
-Fold 3: 98.93%
-Fold 4: 98.62%
-Fold 5: 98.65%
+Fold 1: 98.70%
+Fold 2: 98.94%
+Fold 3: 98.22%
+Fold 4: 98.81%
+Fold 5: 98.39%
 
-Average Train Accuracy: 98.81%
+Average Train Accuracy: 98.61%
 
 -> Train Time:
-Fold 1: 8.648 seconds
-Fold 2: 10.475 seconds
-Fold 3: 10.354 seconds
-Fold 4: 10.204 seconds
-Fold 5: 10.610 seconds
+Fold 1: 10.339 seconds
+Fold 2: 10.579 seconds
+Fold 3: 9.645 seconds
+Fold 4: 10.685 seconds
+Fold 5: 9.915 seconds
 
-Average Train Time: 10.058 seconds
+Average Train Time: 10.233 seconds
 
 -> Train Loss: (Avg per fold)
-Fold 1: 0.041555
-Fold 2: 0.037114
-Fold 3: 0.036512
-Fold 4: 0.043690
-Fold 5: 0.040972
+Fold 1: 0.039095
+Fold 2: 0.037215
+Fold 3: 0.049690
+Fold 4: 0.038761
+Fold 5: 0.045215
 
-Average Train Loss: 0.039969
+Average Train Loss: 0.041995
 
 -> Validation Loss (Avg per fold):
-Fold 1: 0.023372
-Fold 2: 0.020658
-Fold 3: 0.019829
-Fold 4: 0.024510
-Fold 5: 0.023876
+Fold 1: 0.022081
+Fold 2: 0.018942
+Fold 3: 0.029599
+Fold 4: 0.021466
+Fold 5: 0.027257
 
-Average Validation Loss: 0.022449
+Average Validation Loss: 0.023869

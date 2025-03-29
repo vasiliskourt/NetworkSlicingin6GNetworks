@@ -1,6 +1,6 @@
 import xgboost as xgb
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, classification_report
 from sklearn.model_selection import StratifiedKFold
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -24,6 +24,8 @@ train_fold_accuracies = []
 train_time_l = []
 train_loss = []
 val_loss = []
+classific_report = []
+
 
 for train_index, val_index in k_folds.split(features, label):
     fold_n += 1
@@ -81,6 +83,13 @@ for train_index, val_index in k_folds.split(features, label):
 
     print(f"-> Fold {fold_n} Validation Accuracy: {val_accuracy:.2f}%, Train Accuracy: {train_accuracy:.2f}%, Training Time: {training_time:.3f} seconds\n")
 
+    classific_report.append(classification_report(y_val,val_predictions, digits=2))
+
+    cm = ConfusionMatrixDisplay.from_predictions(y_val, val_predictions, cmap="Blues")
+    plt.title("Random Forest - Confusion Matrix")
+    plt.grid(False)
+    plt.savefig(f"XGBoost_K_Fold_plots/CM_{fold_n}.png")
+
 avg_val_accuracy = np.mean(val_fold_accuracies)
 avg_train_accuracy = np.mean(train_fold_accuracies)
 
@@ -126,6 +135,9 @@ with open("XGBoost_report/xgboost_report.txt", "w") as file:
     for i, loss in enumerate(val_loss):
         file.write(f"Fold {i+1}: {loss:.10f}\n")
     file.write(f"\nAverage Validation Loss: {np.mean(val_loss):.10f}\n")
+    file.write(f"\n-> Classification Report\n")
+    for i, report in enumerate(classific_report):
+        file.write(f"Fold {i+1}:\n {report}\n")
 
 print("================================\n")
 print(f"-> Average Validation Accuracy: {avg_val_accuracy:.2f}%\n")

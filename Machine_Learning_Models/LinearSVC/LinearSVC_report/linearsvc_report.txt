@@ -1,4 +1,4 @@
----------XGBoost Report---------
+---------LinearSVC Report---------
 
 -> Validation Accuracy:
 Fold 1: 100.00%
@@ -16,34 +16,16 @@ Fold 3: 100.00%
 Fold 4: 100.00%
 Fold 5: 100.00%
 
-Average Train Accuracy: 100.00%
+Average Train Validation Accuracy: 100.00%
 
 -> Train Time:
-Fold 1: 0.091 seconds
-Fold 2: 0.103 seconds
-Fold 3: 0.092 seconds
-Fold 4: 0.113 seconds
-Fold 5: 0.105 seconds
+Fold 1: 0.139 seconds
+Fold 2: 0.143 seconds
+Fold 3: 0.143 seconds
+Fold 4: 0.141 seconds
+Fold 5: 0.123 seconds
 
-Average Train Time: 0.101 seconds
-
--> Train Loss: (Avg per fold)
-Fold 1: 0.0361210688
-Fold 2: 0.0318498219
-Fold 3: 0.0327095339
-Fold 4: 0.0298880083
-Fold 5: 0.0318500288
-
-Average Train Loss: 0.0324836923
-
--> Validation Loss (Avg per fold):
-Fold 1: 0.0361210627
-Fold 2: 0.0318497758
-Fold 3: 0.0327094032
-Fold 4: 0.0298881917
-Fold 5: 0.0318501323
-
-Average Validation Loss: 0.0324837131
+Average Train Time: 0.138 seconds
 
 -> Classification Report
 Fold 1:

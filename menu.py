@@ -21,10 +21,12 @@ while True:
             "CNN K-Fold Cross-Validation",
             "Random Forest K-Fold Cross-Validation",
             "XGBoost K-Fold Cross-Validation",
+            "LinearSVC K-Fold Cross-Validation",
             "MLP Train",
             "CNN Train",
             "Random Forest Train",
             "XGBoost Train",
+            "LinearSVC Train",
             "Random Forest Classifier SHAP",
             "Random Forest Classifier Lime",
             "Exit"
@@ -63,6 +65,12 @@ while True:
 
     elif select == "Random Forest Classifier Lime":
         executeScript("rfc_lime.py","Machine_Learning_Models/Random_Forest_Classifier")
+
+    elif select == "LinearSVC Train":
+        executeScript("linearSVC.py","Machine_Learning_Models/LinearSVC")
+
+    elif select == "LinearSVC K-Fold Cross-Validation":
+        executeScript("linearSVC_K_Fold.py","Machine_Learning_Models/LinearSVC")
 
     elif select == "Exit":
         break

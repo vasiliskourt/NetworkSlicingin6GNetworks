@@ -51,16 +51,23 @@ plt.legend()
 plt.grid(True)
 plt.savefig("XGBoost_train_plots/train_validation_loss.png")
 
-predictions = np.argmax(model.predict(test_dmatrix), axis=1)
-test_accuracy = accuracy_score(y_test, predictions) * 100
+train_predictions = np.argmax(model.predict(train_dmatrix), axis=1)
+test_predictions = np.argmax(model.predict(test_dmatrix), axis=1)
+val_predictions = np.argmax(model.predict(val_dmatrix), axis=1)
+
+test_accuracy = accuracy_score(y_test, test_predictions) * 100
+train_accuracy = accuracy_score(y_train, train_predictions) * 100
+val_accuracy = accuracy_score(y_val, val_predictions) * 100
 
 print("\n================================\n")
-print(classification_report(y_test, predictions, digits=2))
+print(classification_report(y_test, test_predictions, digits=2))
 print("================================\n")
 
 model.save_model("XGBoost_model/xgboost_model.json")
 joblib.dump(scaler, "XGBoost_model/scaler.pkl")
 
+print(f"-> Train Accuracy: {train_accuracy:.2f}%\n")
+print(f"-> Val Accuracy: {val_accuracy:.2f}%\n")
 print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
 print("================================\n")
 print("Plots saved:\n -> XGBoost_Classifier/XGBoost_train_plots\n")

@@ -1,7 +1,7 @@
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import accuracy_score,  classification_report, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, classification_report
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -22,6 +22,8 @@ k_folds = StratifiedKFold(n_splits=k_folds_n, shuffle=True, random_state=42)
 val_fold_accuracies = []
 train_fold_accuracies = []
 train_time_l = []
+
+classific_report = []
 
 for train_index, val_index in k_folds.split(features, label):
 
@@ -53,6 +55,8 @@ for train_index, val_index in k_folds.split(features, label):
 
     print(f"-> Fold {fold_n} Validation Accuracy: {val_accuracy:.2f}%, Train Accuracy: {train_accuracy:.2f}%, Training Time: {training_time:.3f} seconds\n")
 
+    classific_report.append(classification_report(y_val,val_predictions, digits=2))
+
     cm = ConfusionMatrixDisplay.from_predictions(y_val, val_predictions, cmap="Blues")
     plt.title("Random Forest - Confusion Matrix")
     plt.grid(False)
@@ -73,7 +77,7 @@ plt.savefig(f"RandomForestClassifier_K_Fold_plots/training_time.png")
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), val_fold_accuracies, label="Val Accuracy")
 plt.plot(range(1, k_folds_n + 1), train_fold_accuracies, label="Train Accuracy")
-plt.title("(XGBoost) Validation Accuracy per Fold")
+plt.title("(Random Forest) Validation Accuracy per Fold")
 plt.xlabel("Fold")
 plt.ylabel("Validation Accuracy (%)")
 plt.xticks(range(1, k_folds_n + 1))
@@ -82,7 +86,7 @@ plt.grid(True)
 plt.savefig(f"RandomForestClassifier_K_Fold_plots/k_folds_accuracy.png")
 
 with open("RandomForest_report/randomforest_report.txt", "w") as file:
-    file.write("---------Random Forest Report---------\n")
+    file.write("--------- Random Forest Report---------\n")
     file.write("\n-> Validation Accuracy:\n")
     for i, acc in enumerate(val_fold_accuracies):
         file.write(f"Fold {i+1}: {acc:.2f}%\n")
@@ -95,6 +99,9 @@ with open("RandomForest_report/randomforest_report.txt", "w") as file:
     for i, times in enumerate(train_time_l):
         file.write(f"Fold {i+1}: {times:.3f} seconds\n")
     file.write(f"\nAverage Train Time: {np.mean(train_time_l):.3f} seconds\n")
+    file.write(f"\n-> Classification Report\n")
+    for i, report in enumerate(classific_report):
+        file.write(f"Fold {i+1}:\n {report}\n")
 
 
 print("================================\n")

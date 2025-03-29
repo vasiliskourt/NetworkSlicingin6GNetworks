@@ -20,9 +20,13 @@ X_val, X_test, y_val, y_test = train_test_split(X_temp, y_temp, test_size=0.5, s
 randomForestModel = RandomForestClassifier(n_estimators=100, random_state=42)
 randomForestModel.fit(X_train,y_train)
 
+train_predictions = randomForestModel.predict(X_train)
 test_predictions = randomForestModel.predict(X_test)
+val_predictions = randomForestModel.predict(X_val)
 
 test_accuracy = accuracy_score(y_test, test_predictions) * 100
+train_accuracy = accuracy_score(y_train, train_predictions) * 100
+val_accuracy = accuracy_score(y_val, val_predictions) * 100
 
 joblib.dump(randomForestModel, "RandomForestClassifier_model/random_forest_model.pkl")
 joblib.dump(scaler, "RandomForestClassifier_model/scaler.pkl")
@@ -30,6 +34,8 @@ joblib.dump(scaler, "RandomForestClassifier_model/scaler.pkl")
 print("\n================================\n")
 print(classification_report(y_test, test_predictions, digits=2))
 print("================================\n")
+print(f"-> Train Accuracy: {train_accuracy:.2f}%\n")
+print(f"-> Val Accuracy: {val_accuracy:.2f}%\n")
 print(f"-> Test Accuracy: {test_accuracy:.2f}%\n")
 
 cm = ConfusionMatrixDisplay.from_predictions(y_test, test_predictions, cmap="Blues")
