@@ -103,6 +103,19 @@ try:
 
         print(f"-> Train with {len(features_scaled_df.columns)} features, accuracy: {test_accuracy:.2f}%\n")
 
+    plt.figure(figsize=(10, 5))
+    plt.plot(range(len(accuracies)), accuracies, label='Test Accuracy')
+    plt.title("Accuracy vs Number of Features")
+    plt.xlabel("Number Features Used")
+    plt.ylabel("Test Accuracy (%)")
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig("RandomForest_drop_feature_plot/accuracy_features.png")
+
+    print("================================\n")
+    print("Plots saved:\n -> Random_Forest_Classifier/RandomForest_drop_feature_plot\n")
+    print("================================\n")
 
 except FileNotFoundError as e:
     print(e)
