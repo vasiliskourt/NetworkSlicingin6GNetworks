@@ -90,9 +90,10 @@ try:
             if column in features_scaled_df.columns:
                 features_scaled_df.drop(columns=column, inplace=True)
 
-        X_train, X_test, y_train, y_test = train_test_split(features_scaled_df, label, test_size=0.2, stratify=label, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(features_scaled_df, label, test_size=0.3, stratify=label, random_state=42)
         
         randomForestModel = RandomForestClassifier(n_estimators=100, random_state=42)
+
         randomForestModel.fit(X_train,y_train)
 
         test_predictions = randomForestModel.predict(X_test)
