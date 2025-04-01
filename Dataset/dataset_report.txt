@@ -1,0 +1,39 @@
+--------- Dataset Report---------
+
+-> Dataset:
+   LTE/5g Category  Time  Packet Loss Rate  Packet delay  IoT  LTE/5G  GBR  Non-GBR  AR/VR/Gaming  Healthcare  Industry 4.0  IoT Devices  Public Safety  Smart City & Home  Smart Transportation  Smartphone  slice Type
+0               14     0          0.000001            10    1       0    0        1             0           0             0            0              1                  0                     0           0           3
+1               18    20          0.001000           100    0       1    1        0             1           0             0            0              0                  0                     0           0           1
+2               17    14          0.000001           300    0       1    0        1             0           0             0            0              0                  0                     0           1           1
+3                3    17          0.010000           100    0       1    0        1             0           0             0            0              0                  0                     0           1           1
+4                9     4          0.010000            50    1       0    0        1             0           0             0            0              0                  1                     0           0           2
+5               19     2          0.000001            10    1       0    0        1             0           0             1            0              0                  0                     0           0           3
+6               15     2          0.010000           300    1       0    1        0             0           0             0            1              0                  0                     0           0           2
+7               19     3          0.001000            50    0       1    0        1             1           0             0            0              0                  0                     0           0           1
+8                8    20          0.001000           150    0       1    0        1             0           0             0            0              0                  0                     0           1           1
+9               13    10          0.001000           150    0       1    0        1             0           0             0            0              0                  0                     0           1           1
+
+-> Dataset Column Types:
+LTE/5g Category           int64
+Time                      int64
+Packet Loss Rate        float64
+Packet delay              int64
+IoT                       int64
+LTE/5G                    int64
+GBR                       int64
+Non-GBR                   int64
+AR/VR/Gaming              int64
+Healthcare                int64
+Industry 4.0              int64
+IoT Devices               int64
+Public Safety             int64
+Smart City & Home         int64
+Smart Transportation      int64
+Smartphone                int64
+slice Type                int64
+
+-> Dataset Labels (Slice Types):
+slice Type
+1    16799
+3     7392
+2     7392

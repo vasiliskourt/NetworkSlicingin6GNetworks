@@ -24,6 +24,20 @@ try:
     features_scaled = scaler.transform(features)
     features_scaled_df = pd.DataFrame(features_scaled, columns=features.columns)
     
+    importances = model.feature_importances_
+    forest_importances = pd.Series(importances, index=features.columns)
+
+    print("-> Feature importances:\n")
+    print(forest_importances.sort_values(ascending=False))
+    print("================================\n")
+
+    plt.figure(figsize=(14, 7))
+    forest_importances.sort_values().plot(kind='barh')
+    plt.title("Random Forest Feature Importances")
+    plt.tight_layout()
+    plt.savefig("Feature_Importances/feature_importances_plot.png")
+    plt.close()
+
     print("-> Running SHAP...\n")
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(features_scaled_df)
@@ -70,6 +84,7 @@ try:
     features_importance_series = pd.Series(shap_importance, index=features.columns)
     feature_names_sorted = features_importance_series.sort_values(ascending=True).index
 
+    print("-> SHAP Feature Importances:\n")
     print(features_importance_series.sort_values(ascending=False))
     print("================================\n")
 

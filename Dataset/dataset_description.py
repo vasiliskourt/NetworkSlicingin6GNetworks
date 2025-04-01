@@ -1,4 +1,8 @@
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.decomposition import PCA
 
 pd.set_option('display.max_columns', None)
 
@@ -18,8 +22,40 @@ print("\n-> Dataset Column Types:\n")
 print(dataset_df.dtypes)
 print("\n============================================")
 
-
 print("\n-> Dataset Labels (Slice Types):\n")
 print(dataset_df['slice Type'].value_counts())
 print("\n============================================\n")
 
+
+features = dataset_df.drop(columns=['slice Type'])
+correlation = features.corr()
+
+plt.figure(figsize=(12, 10))
+sns.heatmap(correlation, annot=True, fmt=".2f", cmap="coolwarm", square=True, cbar=True)
+plt.title("Feature Correlation Heatmap")
+plt.tight_layout()
+plt.savefig("Dataset_plots/correlation_heatmap.png")
+plt.close()
+
+filtered_corr = correlation.mask((correlation < 0.5) & (correlation > -0.5))
+plt.figure(figsize=(12, 10))
+sns.heatmap(filtered_corr, annot=True, fmt=".2f", cmap="coolwarm", square=True, cbar=True)
+plt.title("Feature Correlation Heatmap")
+plt.tight_layout()
+plt.savefig("Dataset_plots/correlation_heatmap_0_5.png")
+plt.close()
+
+with open("dataset_report.txt", "w") as file:
+    file.write("--------- Dataset Report---------\n")
+    file.write("\n-> Dataset:\n")
+    file.write(dataset_df.head(10).to_string())
+    file.write("\n\n-> Dataset Column Types:\n")
+    file.write(dataset_df.dtypes.to_string())
+    file.write("\n\n-> Dataset Labels (Slice Types):\n")
+    file.write(dataset_df['slice Type'].value_counts().to_string())
+
+
+print("================================\n")
+print("Report saved:\n -> Dataset/\n")
+print("Plots saved:\n -> Dataset/Dataset_plots\n")
+print("================================\n")
