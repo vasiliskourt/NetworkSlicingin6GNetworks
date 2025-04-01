@@ -39,7 +39,7 @@ try:
         plt.close()
 
     shap_values_avg = np.mean(np.abs(shap_values), axis=2)
-
+    
     plt.figure(figsize=(14, 7))
     shap.summary_plot(shap_values_avg, features=features_scaled_df, show=False)
     plt.title("SHAP Summary Plot")

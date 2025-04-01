@@ -6,7 +6,7 @@ import numpy as np
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.model_selection import StratifiedKFold
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, ConfusionMatrixDisplay, classification_report
 import matplotlib.pyplot as plt
 import pandas as pd
 import time
@@ -34,12 +34,13 @@ train_fold_accuracies = []
 train_time_l = []
 train_loss_l = []
 val_loss_l = []
+classific_report = []
 fold_n = 0
 
 for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     fold_n += 1
 
-    print(f"\n======= Fold {fold_n}/{k_folds_n} =======")
+    print(f"\n================== Fold {fold_n}/{k_folds_n} ==================")
 
     X_train = features_tensor[train_index]
     y_train = label_tensor[train_index]
@@ -105,11 +106,11 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
                 _, predicted = torch.max(outputs, 1)
                 val_predictions.extend(predicted.cpu().numpy())
                 val_labels.extend(batch_y.cpu().numpy())
-         
+        
         avg_val_loss = val_loss / len(val_loader)
         val_accuracy = accuracy_score(val_labels, val_predictions) * 100
 
-        print(f"Epoch [{epoch+1}/{num_epochs}] Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f} | Train Acc: {train_accuracy:.2f}% | Val Accuracy: {val_accuracy:.2f}%")
+        print(f"Epoch [{epoch+1}/{num_epochs}] Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f} | Train Accuracy: {train_accuracy:.2f}% | Val Accuracy: {val_accuracy:.2f}%")
         
         train_losses.append(avg_train_loss)
         val_losses.append(avg_val_loss)
@@ -126,7 +127,18 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     train_loss_l.append(np.mean(train_losses))
     val_loss_l.append(np.mean(val_losses))
 
+    print("\n-> Classification Report\n")
+    print(len(val_predictions))
+    print(classification_report(y_val,val_predictions, digits=2))
+
     print(f"\n-> Fold {fold_n} Average Validation Accuracy: {val_avg_accuracy:.2f}%, Average Train Accuracy: {train_avg_accuracy:.2f}%, Training Time: {training_time:.3f} seconds")
+
+    classific_report.append(classification_report(y_val,val_predictions, digits=2))
+
+    cm = ConfusionMatrixDisplay.from_predictions(y_val, val_predictions, cmap="Blues")
+    plt.title("MLP - Confusion Matrix")
+    plt.grid(False)
+    plt.savefig(f"MLP_K_Fold_plots/Confusion_Matrix/CM_{fold_n}.png")
 
     plt.figure(figsize=(10, 4))
     plt.plot(train_losses, label="Train Loss")
@@ -136,7 +148,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.ylabel("Loss")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"MLP_K_Fold_plots/train_validation_loss_fold_{fold_n}.png")
+    plt.savefig(f"MLP_K_Fold_plots/Train_Validation_Loss/train_validation_loss_fold_{fold_n}.png")
 
     plt.figure(figsize=(10, 4))
     plt.plot(val_accuracies, label="Validation Accuracy")
@@ -146,7 +158,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.ylabel("Accuracy (%)")
     plt.legend()
     plt.grid(True)
-    plt.savefig(f"MLP_K_Fold_plots/train_validation_accuracy_fold_{fold_n}.png")
+    plt.savefig(f"MLP_K_Fold_plots/Train_Validation_Accuracy/train_validation_accuracy_fold_{fold_n}.png")
 
 
 print("================================\n")
@@ -198,7 +210,9 @@ with open("MLP_report/mlp_report.txt", "w") as file:
     for i, loss in enumerate(val_loss_l):
         file.write(f"Fold {i+1}: {loss:.6f}\n")
     file.write(f"\nAverage Validation Loss: {np.mean(val_loss_l):.6f}\n")
-
+    file.write(f"\n-> Classification Report\n")
+    for i, report in enumerate(classific_report):
+        file.write(f"Fold {i+1}:\n {report}\n")
 
 print("Report saved:\n -> MLP/MLP_report\n")
 print("Plots saved:\n -> MLP/MLP_K_Fold_plots\n")

@@ -86,7 +86,7 @@ for train_index, val_index in k_folds.split(features, label):
     classific_report.append(classification_report(y_val,val_predictions, digits=2))
 
     cm = ConfusionMatrixDisplay.from_predictions(y_val, val_predictions, cmap="Blues")
-    plt.title("Random Forest - Confusion Matrix")
+    plt.title("XGBoost - Confusion Matrix")
     plt.grid(False)
     plt.savefig(f"XGBoost_K_Fold_plots/CM_{fold_n}.png")
 
