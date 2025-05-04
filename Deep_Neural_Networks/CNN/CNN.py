@@ -7,7 +7,7 @@ from sklearn.preprocessing import MinMaxScaler
 import torch.optim as optim
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, ConfusionMatrixDisplay
 import joblib
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
@@ -114,6 +114,7 @@ for epoch in range(num_epochs):
     val_accuracy_l.append(val_accuracy)
     val_loss_l.append(avg_val_loss)
 
+
 # Save trained model
 torch.save(model.state_dict(), "CNN_model/cnn_state.pth")
 
@@ -165,6 +166,13 @@ with torch.no_grad():
         test_correct.extend(batch_y.numpy())
 
 test_accuracy = accuracy_score(test_correct, test_prediction) * 100
+
+
+# Generate Confusion Matrix
+cm = ConfusionMatrixDisplay.from_predictions(y_test, test_prediction, cmap="Blues")
+plt.title("CNN - Confusion Matrix")
+plt.grid(False)
+plt.savefig("CNN_CM/CM.png")
 
 # Print results
 print("\n================================\n")
