@@ -16,17 +16,24 @@ dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy()
 
-scaler = MinMaxScaler(feature_range=(0,1))
+# Initialize scale and data normalization 
+scaler = MinMaxScaler(feature_range=(0,1)) 
 features = scaler.fit_transform(features)
 
 features_tensor = torch.tensor(features, dtype=torch.float32)
+
+# Create tensor and subtract 1 from lable tensors  to get values indexing 
+# from 0 for our tensor
 label_tensor = torch.tensor(label, dtype=torch.long) - 1
 
+# Number of Folds
 k_folds_n = 5
 
+# Initialize Stratified K-Fold
 k_folds = StratifiedKFold(n_splits=k_folds_n, shuffle=True, random_state=42)
 
 batch_size=512
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 val_fold_accuracies = []
@@ -41,21 +48,26 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     fold_n += 1
 
     print(f"\n================== Fold {fold_n}/{k_folds_n} ==================")
-
+    
+    # Tensors of every fold
     X_train = features_tensor[train_index]
     y_train = label_tensor[train_index]
     X_val = features_tensor[val_index]
     y_val = label_tensor[val_index]
     
+    # Reshaping necessary for our CNN1D model: batch, channel, features
     X_train = X_train.reshape(-1, 1, 16)
     X_val = X_val.reshape(-1,1,16)
 
+    # Create fold dataset
     train_fold_dataset = TensorDataset(X_train, y_train)
     val_fold_dataset = TensorDataset(X_val, y_val)
 
+    # Create dataset loader
     train_loader = DataLoader(train_fold_dataset, batch_size=batch_size, shuffle= True)
     val_loader = DataLoader(val_fold_dataset,batch_size=batch_size)
 
+    # Load the model and parameters
     model = CNN1D(input_size=16, hidden_units=32, dropout=0.3, num_classes=3).to(device)
     optimizer = optim.Adam(model.parameters(), lr=0.001,weight_decay=0.0001)
     criterion = nn.CrossEntropyLoss()
@@ -68,9 +80,9 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     train_accuracies = []
 
     train_time_start = time.time()
-
+    
+    # Training begins
     for epoch in range(num_epochs):
-        
         model.train()
         val_avg_accuracy = 0
         train_avg_accuracy = 0
@@ -90,16 +102,19 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
             train_correct_prediction += (predicted == batch_y).sum().item()
             train_total_checked += batch_y.size(0)
 
+        # Calculate train loss and accuracy
         avg_train_loss = train_loss / len(train_loader)
         train_accuracy  = 100 * train_correct_prediction / train_total_checked      
 
-
+        # Model to evaluation mode
         model.eval()
         val_predictions = []
         val_labels = []
 
+        # Evaluate model
         with torch.no_grad():
             val_loss = 0
+
             for batch_X, batch_y in val_loader:
                 batch_X, batch_y = batch_X.to(device), batch_y.to(device)
                 outputs = model(batch_X)
@@ -109,11 +124,13 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
                 val_predictions.extend(predicted.cpu().numpy())
                 val_labels.extend(batch_y.cpu().numpy())
          
+        # Calculate train loss and accuracy
         avg_val_loss = val_loss / len(val_loader)
         val_accuracy = accuracy_score(val_labels, val_predictions) * 100
 
         print(f"Epoch [{epoch+1}/{num_epochs}] Train Loss: {avg_train_loss:.6f} | Val Loss: {avg_val_loss:.6f} | Train Accuracy: {train_accuracy:.2f}% | Val Accuracy: {val_accuracy:.2f}%")
         
+        # Save train data
         train_losses.append(avg_train_loss)
         val_losses.append(avg_val_loss)
         train_accuracies.append(train_accuracy)
@@ -129,6 +146,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     train_loss_l.append(np.mean(train_losses))
     val_loss_l.append(np.mean(val_losses))
 
+    # Classification Report
     print("\n-> Classification Report\n")
     print(classification_report(y_val,val_predictions, digits=2))
 
@@ -136,11 +154,13 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
 
     classific_report.append(classification_report(y_val,val_predictions, digits=2))
 
+    # Generate Confusion Matrix
     cm = ConfusionMatrixDisplay.from_predictions(y_val, val_predictions, cmap="Blues")
     plt.title("CNN - Confusion Matrix")
     plt.grid(False)
     plt.savefig(f"CNN_K_Fold_plots/Confusion_Matrix/CM_{fold_n}.png")
 
+    # Generate fold Train/Validation Loss
     plt.figure(figsize=(10, 4))
     plt.plot(train_losses, label="Train Loss")
     plt.plot(val_losses, label="Validation Loss")
@@ -152,6 +172,7 @@ for train_index, val_index in k_folds.split(features_tensor,label_tensor):
     plt.grid(True)
     plt.savefig(f"CNN_K_Fold_plots/Train_Validation_Loss/train_validation_loss_fold_{fold_n}.png")
 
+    #Generate fold Train/Validation Accuracy
     plt.figure(figsize=(10, 4))
     plt.plot(val_accuracies, label="Validation Accuracy")
     plt.plot(train_accuracies, label="Train Accuracy")
@@ -169,6 +190,7 @@ print(f"-> Average K-Fold Validation Accuracy: {np.mean(val_fold_accuracies):.2f
 print(f"-> Average CNN Training Time: {np.mean(train_time_l):.2f} seconds\n")
 print("================================\n")
 
+# Generate Folds Train/Validation Accuracy
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), val_fold_accuracies, label="Val Accuracy")
 plt.plot(range(1, k_folds_n + 1), train_fold_accuracies, label="Train Accuracy")
@@ -180,6 +202,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(f"CNN_K_Fold_plots/k_folds_accuracy.png")
 
+# Generate Train Time
 plt.figure(figsize=(10, 4))
 plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time")
 plt.title("(CNN) Time to train")
@@ -189,6 +212,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(f"CNN_K_Fold_plots/training_time.png")
 
+# Save k fold result to report
 with open("CNN_report/CNN_report.txt", "w") as file:
     file.write("---------CNN Report---------\n")
     file.write(f"-> Epochs: {num_epochs}\n")
