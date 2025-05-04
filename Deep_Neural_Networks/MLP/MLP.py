@@ -168,7 +168,6 @@ plt.title("MLP - Confusion Matrix")
 plt.grid(False)
 plt.savefig("MLP_CM/CM.png")
 
-
 # Print results
 print("\n================================\n")
 print(classification_report(y_test, test_prediction, digits=2))

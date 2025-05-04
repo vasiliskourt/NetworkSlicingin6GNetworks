@@ -19,13 +19,13 @@ Fold 5: 100.00%
 Average Train Accuracy: 100.00%
 
 -> Train Time:
-Fold 1: 0.088 seconds
-Fold 2: 0.100 seconds
-Fold 3: 0.090 seconds
-Fold 4: 0.127 seconds
-Fold 5: 0.087 seconds
+Fold 1: 0.080 seconds
+Fold 2: 0.093 seconds
+Fold 3: 0.087 seconds
+Fold 4: 0.090 seconds
+Fold 5: 0.099 seconds
 
-Average Train Time: 0.099 seconds
+Average Train Time: 0.090 seconds
 
 -> Train Loss: (Avg per fold)
 Fold 1: 0.0361210688
