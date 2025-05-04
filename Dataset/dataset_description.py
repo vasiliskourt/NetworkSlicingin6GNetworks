@@ -54,8 +54,6 @@ with open("dataset_report.txt", "w") as file:
     file.write("\n\n-> Dataset Labels (Slice Types):\n")
     file.write(dataset_df['slice Type'].value_counts().to_string())
 
-
-print("================================\n")
 print("Report saved:\n -> Dataset/\n")
 print("Plots saved:\n -> Dataset/Dataset_plots\n")
 print("================================\n")
