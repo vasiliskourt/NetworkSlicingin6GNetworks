@@ -11,7 +11,6 @@ from sklearn.metrics import accuracy_score, classification_report
 import joblib
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
-
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy()
 

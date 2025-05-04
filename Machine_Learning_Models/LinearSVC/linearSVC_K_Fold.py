@@ -11,40 +11,49 @@ dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 features = dataset_df.drop(columns=['slice Type'])
 label = (dataset_df['slice Type'] - 1)
 
+# Initialize scaler and data normalization 
 scaler = MinMaxScaler(feature_range=(0,1))
 features = scaler.fit_transform(features)
 
+# Number of Folds
 k_folds_n = 5
 fold_n = 0
 
+# Initialize Stratified K-Fold
 k_folds = StratifiedKFold(n_splits=k_folds_n, shuffle=True, random_state=42)
 
 val_fold_accuracies = []
 train_fold_accuracies = []
 train_time_l = []
-
 classific_report = []
 
 for train_index, val_index in k_folds.split(features, label):
 
     fold_n += 1
 
+    # Array of indexes for every fold
     X_train = features[train_index]
     X_val = features[val_index]
     y_train = label[train_index]
     y_val = label[val_index]
 
+    # Load the model and parameters
     linearSVC = SVC(kernel='linear', probability=True, random_state=42)
 
+    # Calculate training time
     train_time_start = time.time()
+
+    # Training of model
     linearSVC.fit(X_train,y_train)  
 
     train_time_end = time.time()
     training_time = train_time_end - train_time_start
 
+    # Prediction of validation and training data
     val_predictions = linearSVC.predict(X_val)
     train_predictions = linearSVC.predict(X_train)
 
+    # Calculate  validation and train accuracy
     val_accuracy = accuracy_score(y_val, val_predictions) * 100
     train_accuracy = accuracy_score(y_train, train_predictions) * 100
 
@@ -53,17 +62,21 @@ for train_index, val_index in k_folds.split(features, label):
     train_fold_accuracies.append(train_accuracy)
 
     print(f"-> Fold {fold_n} Validation Accuracy: {val_accuracy:.2f}%, Train Accuracy: {train_accuracy:.2f}%, Training Time: {training_time:.3f} seconds\n")
-
+    
+    # Append classification report of every fold
     classific_report.append(classification_report(y_val,val_predictions, digits=2))
-
+    
+    # Generate Confusion Matrix
     cm = ConfusionMatrixDisplay.from_predictions(y_val, val_predictions, cmap="Blues")
     plt.title("LinearSVC - Confusion Matrix")
     plt.grid(False)
     plt.savefig(f"LinearSVC_K_Fold_plots/CM_{fold_n}.png")
 
+# Calculate mean of folds' accuracy for validation and training
 avg_val_accuracy = np.mean(val_fold_accuracies)
 avg_train_accuracy = np.mean(train_fold_accuracies)
 
+# Plot Train Time
 plt.figure(figsize=(10, 4))
 plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time")
 plt.title("(LinearSVC) Time to train")
@@ -73,6 +86,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(f"LinearSVC_K_Fold_plots/training_time.png")
 
+# Plot Folds Train/Validation Accuracy
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), val_fold_accuracies, label="Val Accuracy")
 plt.plot(range(1, k_folds_n + 1), train_fold_accuracies, label="Train Accuracy")
@@ -84,6 +98,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(f"LinearSVC_K_Fold_plots/k_folds_accuracy.png")
 
+# Save k fold result to report
 with open("LinearSVC_report/linearsvc_report.txt", "w") as file:
     file.write("---------LinearSVC Report---------\n")
     file.write("\n-> Validation Accuracy:\n")

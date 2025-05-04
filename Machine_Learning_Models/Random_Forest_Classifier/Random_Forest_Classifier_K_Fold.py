@@ -11,12 +11,15 @@ dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
 features = dataset_df.drop(columns=['slice Type'])
 label = (dataset_df['slice Type'] - 1)
 
+# Initialize scale and data normalization 
 scaler = MinMaxScaler(feature_range=(0,1))
 features = scaler.fit_transform(features)
 
+# Number of Folds
 k_folds_n = 5
 fold_n = 0
 
+# Initialize Stratified K-Fold
 k_folds = StratifiedKFold(n_splits=k_folds_n, shuffle=True, random_state=42)
 
 val_fold_accuracies = []
@@ -28,24 +31,27 @@ classific_report = []
 for train_index, val_index in k_folds.split(features, label):
 
     fold_n += 1
-
+    # Array of every fold
     X_train = features[train_index]
     X_val = features[val_index]
     y_train = label[train_index]
     y_val = label[val_index]
 
+    #Load the model and parameters
     randomForestModel = RandomForestClassifier(n_estimators=100, random_state=42)
-    
+    #Calculate training time
     train_time_start = time.time()
-
+    #Training of model
     randomForestModel.fit(X_train,y_train)  
 
     train_time_end = time.time()
     training_time = train_time_end - train_time_start
 
+    #Prediction of validation and training data
     val_predictions = randomForestModel.predict(X_val)
     train_predictions = randomForestModel.predict(X_train)
 
+    #Calculate  validation and train accuracy
     val_accuracy = accuracy_score(y_val, val_predictions) * 100
     train_accuracy = accuracy_score(y_train, train_predictions) * 100
 
@@ -62,9 +68,11 @@ for train_index, val_index in k_folds.split(features, label):
     plt.grid(False)
     plt.savefig(f"RandomForestClassifier_K_Fold_plots/CM_{fold_n}.png")
 
+#Calculate mean of folds' accuracy for validation and training
 avg_val_accuracy = np.mean(val_fold_accuracies)
 avg_train_accuracy = np.mean(train_fold_accuracies)
 
+# Generate Train Time
 plt.figure(figsize=(10, 4))
 plt.plot(range(1, k_folds_n + 1), train_time_l, label="Time")
 plt.title("(Random Forest) Time to train")
@@ -74,6 +82,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(f"RandomForestClassifier_K_Fold_plots/training_time.png")
 
+# Generate Folds' Train/Validation Accuracy
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), val_fold_accuracies, label="Val Accuracy")
 plt.plot(range(1, k_folds_n + 1), train_fold_accuracies, label="Train Accuracy")
@@ -85,6 +94,7 @@ plt.legend()
 plt.grid(True)
 plt.savefig(f"RandomForestClassifier_K_Fold_plots/k_folds_accuracy.png")
 
+# Save k fold result to report
 with open("RandomForest_report/randomforest_report.txt", "w") as file:
     file.write("--------- Random Forest Report---------\n")
     file.write("\n-> Validation Accuracy:\n")

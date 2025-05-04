@@ -12,7 +12,6 @@ import pandas as pd
 import time
 
 dataset_df = pd.read_csv("../../Dataset/train_dataset.csv")
-
 features = dataset_df.drop(columns=['slice Type']).to_numpy()
 label = dataset_df['slice Type'].to_numpy()
 
@@ -190,7 +189,7 @@ print(f"-> Average K-Fold Validation Accuracy: {np.mean(val_fold_accuracies):.2f
 print(f"-> Average CNN Training Time: {np.mean(train_time_l):.2f} seconds\n")
 print("================================\n")
 
-# Generate Folds Train/Validation Accuracy
+# Generate Folds' Train/Validation Accuracy
 plt.figure(figsize=(8, 5))
 plt.plot(range(1, k_folds_n + 1), val_fold_accuracies, label="Val Accuracy")
 plt.plot(range(1, k_folds_n + 1), train_fold_accuracies, label="Train Accuracy")
