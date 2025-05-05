@@ -7,6 +7,7 @@ import joblib
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 
 try:
     if not os.path.exists("RandomForestClassifier_model/random_forest_model.pkl"):
@@ -108,6 +109,8 @@ try:
     counter = 0
     print("-> Training model...\n")
 
+    time_l = []
+
     # Train model dropping a feature
     for feature_drop in feature_names_sorted:
         counter += 1
@@ -126,7 +129,13 @@ try:
         
         randomForestModel = RandomForestClassifier(n_estimators=100, random_state=42)
 
+        train_time_start = time.time()
         randomForestModel.fit(X_train,y_train)
+        train_time_end = time.time()
+
+        time_train = train_time_end-train_time_start
+
+        time_l.append(time_train)
 
         test_predictions = randomForestModel.predict(X_test)
 
@@ -134,7 +143,17 @@ try:
 
         accuracies.append(test_accuracy)
 
-        print(f"-> Train with {len(features_scaled_df.columns)} features, accuracy: {test_accuracy:.2f}%\n")
+        print(f"-> Train with {len(features_scaled_df.columns)} features, accuracy: {test_accuracy:.2f}%, Training time: {time_train:.3f} seconds\n")
+
+    # Generate Train Time
+    plt.figure(figsize=(10, 4))
+    plt.plot(range(1, 16), time_l, label="Time")
+    plt.title("(Random Forest) Time to train")
+    plt.xlabel("Number of Features")
+    plt.ylabel("Training Time (seconds)")
+    plt.legend()
+    plt.grid(True)
+    plt.savefig(f"RandomForest_drop_feature_plot/training_time.png")
 
     # Plot Accuracy of every train
     plt.figure(figsize=(10, 5))
