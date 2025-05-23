@@ -147,7 +147,7 @@ try:
 
     # Generate Train Time
     plt.figure(figsize=(10, 4))
-    plt.plot(range(1, 16), time_l, label="Time")
+    plt.plot(list(range(15, 0, -1)), time_l, label="Time") 
     plt.title("(Random Forest) Time to train")
     plt.xlabel("Number of Features")
     plt.ylabel("Training Time (seconds)")
@@ -157,7 +157,8 @@ try:
 
     # Plot Accuracy of every train
     plt.figure(figsize=(10, 5))
-    plt.plot(range(len(accuracies)), accuracies, label='Test Accuracy')
+    plt.plot(list(range(len(accuracies), 0, -1)), accuracies, label='Test Accuracy')
+    plt.gca().invert_xaxis()
     plt.title("Accuracy vs Number of Features")
     plt.xlabel("Number Features Used")
     plt.ylabel("Test Accuracy (%)")

@@ -19,13 +19,13 @@ Fold 5: 100.00%
 Average Train Validation Accuracy: 100.00%
 
 -> Train Time:
-Fold 1: 0.254 seconds
-Fold 2: 0.244 seconds
-Fold 3: 0.245 seconds
-Fold 4: 0.391 seconds
-Fold 5: 0.236 seconds
+Fold 1: 0.241 seconds
+Fold 2: 0.248 seconds
+Fold 3: 0.251 seconds
+Fold 4: 0.411 seconds
+Fold 5: 0.239 seconds
 
-Average Train Time: 0.274 seconds
+Average Train Time: 0.278 seconds
 
 -> Classification Report
 Fold 1:
