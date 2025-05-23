@@ -30,7 +30,7 @@ print("\n============================================\n")
 
 # Δημιουργία του heatmap συσχέτισης
 features = dataset_df.drop(columns=['slice Type'])
-print("\n-> Generate feature correlation heatmap")
+print("-> Generate feature correlation heatmap")
 correlation = features.corr()
 print("\n============================================\n")
 
