@@ -1,4 +1,4 @@
-📡 Network Slicing in 6G Networks
+Network Slicing in 6G Networks
 
 This project explores how machine learning models can classify services into the appropriate network slice types in future 6G networks, 
 based on usage context and technical features. The models are trained to distinguish between eMBB, URLLC, and mMTC slices using real-world inspired datasets.
